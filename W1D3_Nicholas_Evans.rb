@@ -1,3 +1,4 @@
+ls
 def sum_to(int)
   return nil if int <= 0
   return int if int == 1
