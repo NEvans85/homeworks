@@ -41,7 +41,7 @@ class Map
 
   def assign(key, value)
     if keys.include?(key)
-      @kv_pairs[index_of(key)].last = value
+      @kv_pairs[index_of(key)][-1] = value
     else
       @kv_pairs.push([key, value])
     end
@@ -56,7 +56,10 @@ class Map
   end
 
   def show
-    puts @kv_pairs
+    @kv_pairs.each do |kv_pair|
+      key, value = kv_pair
+      puts "#{key}: #{value}"
+    end
   end
 
   private
@@ -66,7 +69,7 @@ class Map
   end
 
   def index_of(key)
-    keys.includes?(key) ? keys.index(key) : nil
+    keys.include?(key) ? keys.index(key) : nil
   end
 
 end
