@@ -1,4 +1,5 @@
 
+require 'byebug'
 class Simon
   COLORS = %w(red blue green yellow)
 
@@ -27,27 +28,34 @@ class Simon
     end
   end
 
+  def ten_blank_lines
+    "\n\n\n\n\n\n\n\n\n\n"
+  end
+
   def show_sequence
-    color_disp_hash = {'red' => '\nRED',
-                       'blue' => '     BLUE',
-                       'green' => '\n         GREEN',
-                       'yellow' => '\n\n    YELLOW'}
+    color_disp_hash = {'red' => "\nRED\n\n",
+                       'blue' => "     BLUE\n\n\n",
+                       'green' => "\n         GREEN\n\n",
+                       'yellow' => "\n\n    YELLOW\n"}
     add_random_color
     @seq.each do |color|
+      clear_screen
+      print ten_blank_lines
       puts color_disp_hash[color]
-      sleep(0.25)
-      system('clear')
+      sleep(1)
+      clear_screen
+      sleep(0.2)
     end
   end
 
   def require_sequence
     puts 'Input the sequence in the order it appeared.'
-    puts 'Input the '
     sequence_length.times do
-      test_seq = @seq.dup
-      return false unless test_seq.unshift[0] == gets.chomp[0]
+      test_seq = deepdup(@seq)
+      input = gets.chomp
+      return true unless test_seq.unshift.first == input
     end
-    true
+    false
   end
 
   def add_random_color
@@ -59,8 +67,8 @@ class Simon
   end
 
   def game_over_message
-    'WRONG! GAME OVER.'
-
+    "WRONG! GAME OVER. \n
+     You remembered #{@sequence_length - 1} colors."
   end
 
   def reset_game
@@ -68,7 +76,17 @@ class Simon
     @seq = []
     @game_over = false
   end
+
+  def deepdup(array)
+    deepdup = []
+    array.each { |el| deepdup << el.dup }
+    deepdup
+  end
+
+  def clear_screen
+    system('clear')
+  end
 end
 
-game = SIMON.new
+game = Simon.new
 game.play
