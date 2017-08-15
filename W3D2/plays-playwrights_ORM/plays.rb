@@ -20,12 +20,12 @@ class Play
   end
 
   def self.find_by_title(title)
-    entry = PlaysDBConnection.instance.execute(<<-SQL, title)
+    entries = PlaysDBConnection.instance.execute(<<-SQL, title)
       SELECT *
       FROM plays
       WHERE title = ?
     SQL
-    Play.new(entry.first)
+    entries.map { |entry| Play.new(entry) }
   end
 
   def self.find_by_playwright(name)

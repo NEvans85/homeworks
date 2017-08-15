@@ -13,12 +13,12 @@ class Playwright
   end
 
   def self.find_by_name(name)
-    entry = PlaysDBConnection.instance.execute(<<-SQL, name)
+    entries = PlaysDBConnection.instance.execute(<<-SQL, name)
       SELECT *
       FROM playwrights
       WHERE name = ?
     SQL
-    Playwright.new(entry.first)
+    entries.map { |entry| Playwright.new(entry) }
   end
 
   attr_reader :name, :birth_year, :id
