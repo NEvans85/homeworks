@@ -23,7 +23,12 @@
         id="user_password"
         value="<%= @user.password %>">
       <br>
-
+      <label for="user_email">Email</label>
+      <input type="text"
+        name="user[email]"
+        value="<%= @user.email %>"
+        id="user_email">
+      <br>
       <input type="submit">
     </form>
   </div>

@@ -7,7 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 10.times do
-  u = User.create!(username: Faker::Name.name, password: "password")
+  u = User.create!(username: Faker::Name.name,
+                   password: "password",
+                   email: Faker::Internet.email)
   Cat.create!(
     user_id: u.id,
     name: Faker::Hipster.word,
